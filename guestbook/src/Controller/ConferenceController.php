@@ -14,21 +14,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ConferenceController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
+    public function index(Environment $twig): Response
     {
-        return new Response($twig->render('conference/index.html.twig', [
-            'conferences' => $conferenceRepository->findAll(),
-        ]));
+        return new Response($twig->render('conference/index.html.twig'));
     }
 
     #[Route('/conference/{id}', name: 'conference')]
-    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository): Response
+    public function show(Request $request, Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
   
         return new Response($twig->render('conference/show.html.twig', [
-            'conferences' => $conferenceRepository->findAll(),
             'conference' => $conference,
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
