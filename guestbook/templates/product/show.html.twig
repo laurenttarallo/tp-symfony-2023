@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product Guestbook - {{ product }}{% endblock %}
+
+{% block body %}
+  <h2>{{ product }} Product</h2>
+
+  <div>Name : {{ product.name }}</div>
+  <div>Description : {{ product.description }}</div>
+  <div>Price : {{ product.price }}</div>
+  <div>Category : {{ product.category }}</div>
+  
+{% endblock %}
