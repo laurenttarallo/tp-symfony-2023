@@ -98,9 +98,10 @@ class Comment implements \Stringable
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): static
     {
         $this->createdAt = new \DateTimeImmutable();
+        return $this;
     }
 
     public function getConference(): ?Conference
