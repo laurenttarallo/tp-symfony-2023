@@ -6,7 +6,7 @@ tests:
 	symfony console doctrine:fixtures:load -n --env=test
 	symfony php bin/phpunit $(MAKECMDGOALS)
 
-commit:
+commit: tests
 	git add .
 	git commit -m"$(message)"
 	git push
