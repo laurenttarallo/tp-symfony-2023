@@ -3,10 +3,10 @@
 namespace App;
 
 use App\Entity\Comment;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class SpamChecker 
+class SpamChecker
 {
     private string $endpoint;
 
@@ -41,12 +41,12 @@ class SpamChecker
         if ('discard' === ($headers['x-akismet-pro-tip'][0] ?? '')) {
             return 2;
         }
-        
+
         $content = $response->getContent();
         if (isset($headers['x-akismet-debug-help'][0])) {
             throw new \RuntimeException(sprintf('Unable to check for spam: %s (%s).', $content, $headers['x-akismet-debug-help'][0]));
         }
+
         return 'true' === $content ? 1 : 0;
     }
-
 }

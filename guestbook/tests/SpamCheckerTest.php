@@ -23,7 +23,6 @@ class SpamCheckerTest extends TestCase
         $checker->getSpamScore(comment: $comment, context: []);
     }
 
-
     /**
      * @dataProvider provideComments
      */
@@ -49,5 +48,4 @@ class SpamCheckerTest extends TestCase
         $response = new MockResponse('false');
         yield 'ham' => [0, $response, $comment, []];
     }
-
 }

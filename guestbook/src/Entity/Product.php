@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Product implements \Stringable
 {
     use TimestampableTrait;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

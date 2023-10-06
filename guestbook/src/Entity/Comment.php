@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CommentStateEnum;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +17,7 @@ class Comment implements \Stringable
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\NotBlank(message: "Author required")]
+    #[Assert\NotBlank(message: 'Author required')]
     #[ORM\Column(length: 255)]
     private ?string $author = null;
 
@@ -38,6 +39,9 @@ class Comment implements \Stringable
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoFilename = null;
+
+    #[ORM\Column(enumType: CommentStateEnum::class, options: ['default' => CommentStateEnum::SUBMITTED] )]
+    private CommentStateEnum $state = CommentStateEnum::SUBMITTED;
 
     public function __toString(): string
     {
@@ -101,6 +105,7 @@ class Comment implements \Stringable
     public function setCreatedAtValue(): static
     {
         $this->createdAt = new \DateTimeImmutable();
+
         return $this;
     }
 
@@ -124,6 +129,18 @@ class Comment implements \Stringable
     public function setPhotoFilename(?string $photoFilename): static
     {
         $this->photoFilename = $photoFilename;
+
+        return $this;
+    }
+
+    public function getState(): CommentStateEnum
+    {
+        return $this->state;
+    }
+
+    public function setState(CommentStateEnum $state): static
+    {
+        $this->state = $state;
 
         return $this;
     }
